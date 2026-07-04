@@ -27,11 +27,21 @@
 
     <!-- Navigation Bar -->
     <nav class="border-b border-zinc-900 bg-[#0b0b0b]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 relative">
             <a href="#" class="text-2xl font-bold tracking-widest gold-gradient bg-clip-text text-transparent">ELITE JEWELRY</a>
 
+            <!-- Categories Links -->
+            <ul class="flex gap-4 md:gap-6 text-sm text-zinc-400 font-semibold overflow-x-auto w-full md:w-auto justify-center scrollbar-hide">
+                <li><a href="#catalog" onclick="selectCategory('الكل')" class="hover:text-[#B38728] transition-colors cursor-pointer whitespace-nowrap">الكل</a></li>
+                <li><a href="#catalog" onclick="selectCategory('أطقم')" class="hover:text-[#B38728] transition-colors cursor-pointer whitespace-nowrap">أطقم</a></li>
+                <li><a href="#catalog" onclick="selectCategory('خواتم')" class="hover:text-[#B38728] transition-colors cursor-pointer whitespace-nowrap">خواتم</a></li>
+                <li><a href="#catalog" onclick="selectCategory('قلادات')" class="hover:text-[#B38728] transition-colors cursor-pointer whitespace-nowrap">قلادات</a></li>
+                <li><a href="#catalog" onclick="selectCategory('أساور')" class="hover:text-[#B38728] transition-colors cursor-pointer whitespace-nowrap">أساور</a></li>
+                <li><a href="#catalog" onclick="selectCategory('أقراط')" class="hover:text-[#B38728] transition-colors cursor-pointer whitespace-nowrap">أقراط</a></li>
+            </ul>
+
             <!-- Cart Icon -->
-            <div class="relative cursor-pointer p-2 hover:bg-zinc-900 rounded-full transition-colors" onclick="toggleCartModal()">
+            <div class="absolute top-0 left-0 md:static relative cursor-pointer p-2 hover:bg-zinc-900 rounded-full transition-colors" onclick="toggleCartModal()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-zinc-400 hover:text-[#BF953F] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
@@ -41,17 +51,89 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative h-[60vh] flex items-center justify-center text-center px-4 bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=80');">
-        <div>
-            <span class="text-xs uppercase tracking-widest text-[#B38728] font-semibold">صياغة فريدة ومميزة</span>
-            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mt-2 mb-4">أناقة أبدية تليق بكِ</h1>
-            <p class="text-zinc-400 max-w-xl mx-auto text-sm md:text-base mb-8 leading-relaxed">قطع حصرية مصممة بدقة لتناسب أرقى الأذواق. ذهب عيار 18 و 24 قيراط وألماس نقي موثق بشهادات عالمية.</p>
-            <a href="#catalog" class="gold-gradient text-black px-8 py-3.5 text-xs font-bold tracking-wider uppercase hover:opacity-90 transition-opacity">تصفح المجموعة الحصرية</a>
+    <header id="hero-carousel" class="relative h-[70vh] md:h-[80vh] flex items-center justify-center text-center px-4 bg-cover bg-center transition-all duration-1000" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=80');">
+        <div class="z-10 animate-fade-in-up">
+            <span class="text-sm uppercase tracking-widest text-[#B38728] font-bold">صياغة فريدة ومميزة</span>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold text-white mt-4 mb-6 leading-tight">أناقة أبدية <br> تليق بكِ</h1>
+            <p class="text-zinc-300 max-w-2xl mx-auto text-base md:text-lg mb-10 leading-relaxed font-light">قطع حصرية مصممة بدقة لتناسب أرقى الأذواق. ذهب عيار 18 و 24 قيراط وألماس نقي موثق بشهادات عالمية، لنبرز جمالكِ الحقيقي.</p>
+            <a href="#catalog" class="inline-block gold-gradient text-black px-10 py-4 text-sm font-bold tracking-widest uppercase hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(179,135,40,0.3)]">تصفحي مجموعتنا الحصرية</a>
+        </div>
+
+        <!-- Carousel Indicators -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-10" id="carousel-indicators">
+            <button class="w-3 h-3 rounded-full bg-[#B38728] transition-all duration-300"></button>
+            <button class="w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300"></button>
+            <button class="w-3 h-3 rounded-full bg-white/30 hover:bg-white/60 transition-all duration-300"></button>
         </div>
     </header>
 
+    <!-- Trust Features Section -->
+    <section class="border-y border-zinc-900 bg-[#111]">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-zinc-800">
+                <div class="flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 text-[#B38728] mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <h3 class="text-white font-bold mb-1">دفع إلكتروني آمن</h3>
+                    <p class="text-xs text-zinc-500">تشفير 256-bit لجميع المعاملات</p>
+                </div>
+                <div class="flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 text-[#B38728] mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                    <h3 class="text-white font-bold mb-1">توصيل مجاني ومؤمن</h3>
+                    <p class="text-xs text-zinc-500">لجميع مناطق المملكة خلال 3 أيام</p>
+                </div>
+                <div class="flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 text-[#B38728] mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                    <h3 class="text-white font-bold mb-1">ضمان مدى الحياة</h3>
+                    <p class="text-xs text-zinc-500">على جميع منتجات الألماس والذهب</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Product Catalog Section -->
     <main id="catalog" class="max-w-7xl mx-auto px-6 py-20 w-full scroll-mt-16">
+
+        <!-- Shop By Category Cards -->
+        <div class="mb-20">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-serif font-bold text-white mb-2">تسوقي حسب الفئة</h2>
+                <div class="w-16 h-0.5 bg-[#B38728] mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div onclick="selectCategory('أطقم')" class="relative aspect-square cursor-pointer group overflow-hidden rounded-sm border border-zinc-900 hover:border-[#B38728] transition-colors">
+                    <img src="https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=400&q=80" alt="أطقم" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-4">
+                        <span class="text-white font-bold tracking-wider">أطقم</span>
+                    </div>
+                </div>
+                <div onclick="selectCategory('خواتم')" class="relative aspect-square cursor-pointer group overflow-hidden rounded-sm border border-zinc-900 hover:border-[#B38728] transition-colors">
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b2548e?auto=format&fit=crop&w=400&q=80" alt="خواتم" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-4">
+                        <span class="text-white font-bold tracking-wider">خواتم</span>
+                    </div>
+                </div>
+                <div onclick="selectCategory('قلادات')" class="relative aspect-square cursor-pointer group overflow-hidden rounded-sm border border-zinc-900 hover:border-[#B38728] transition-colors">
+                    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80" alt="قلادات" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-4">
+                        <span class="text-white font-bold tracking-wider">قلادات</span>
+                    </div>
+                </div>
+                <div onclick="selectCategory('أساور')" class="relative aspect-square cursor-pointer group overflow-hidden rounded-sm border border-zinc-900 hover:border-[#B38728] transition-colors">
+                    <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80" alt="أساور" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-4">
+                        <span class="text-white font-bold tracking-wider">أساور</span>
+                    </div>
+                </div>
+                <div onclick="selectCategory('أقراط')" class="relative aspect-square cursor-pointer group overflow-hidden rounded-sm border border-zinc-900 hover:border-[#B38728] transition-colors">
+                    <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=400&q=80" alt="أقراط" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-4">
+                        <span class="text-white font-bold tracking-wider">أقراط</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="text-center mb-10">
             <h2 class="text-3xl font-serif font-bold text-white mb-2">المجموعة الحصرية</h2>
             <div class="w-24 h-0.5 bg-[#B38728] mx-auto mb-8"></div>
@@ -75,6 +157,64 @@
             <!-- Dynamic elements will be injected here via JavaScript securely -->
         </div>
     </main>
+
+    <!-- Testimonials Section -->
+    <section class="bg-[#111] py-20 border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif font-bold text-white mb-2">آراء عملائنا</h2>
+                <div class="w-16 h-0.5 bg-[#B38728] mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="bg-[#0b0b0b] p-6 border border-zinc-900 rounded-sm hover:border-[#B38728] transition-colors">
+                    <div class="flex text-[#B38728] mb-4">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">"من افضل المتاجر الي تعاملت معها بحياتي. جودة الذهب ممتازة والتغليف راقي جداً يواجه كهدية."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-white">س.خ</div>
+                        <span class="text-white text-sm font-bold">سارة خالد</span>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="bg-[#0b0b0b] p-6 border border-zinc-900 rounded-sm hover:border-[#B38728] transition-colors">
+                    <div class="flex text-[#B38728] mb-4">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">"اول مرة اطلب منهم واللي حمسني التقييم والتعليقات.. المنتج نفس الصورة بالضبط وهذا يشكرون عليه."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-white">ض.ع</div>
+                        <span class="text-white text-sm font-bold">ضحى عبدالكريم</span>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="bg-[#0b0b0b] p-6 border border-zinc-900 rounded-sm hover:border-[#B38728] transition-colors">
+                    <div class="flex text-[#B38728] mb-4">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                    </div>
+                    <p class="text-zinc-400 text-sm leading-relaxed mb-4">"متجر متميز ولديه تشكيلة رائعة، وخدمة العملاء عن طريق الواتساب سريعة ومحترفة جداً."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-white">أ.ع</div>
+                        <span class="text-white text-sm font-bold">أحمد عزوز</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Cart Modal (Hidden by Default) -->
     <div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-end transform translate-x-full transition-transform duration-300">
@@ -108,15 +248,58 @@
     </div>
 
     <!-- Footer -->
-    <footer class="border-t border-zinc-950 bg-[#070707] text-center py-8 text-xs text-zinc-600">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p>&copy; 2026 مجوهرات النخبة. جميع الحقوق محفوظة.</p>
-            <p class="flex items-center gap-1.5">
-                <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                تشفير آمن بنسبة 100%
-            </p>
+    <footer class="border-t border-zinc-950 bg-[#070707] pt-16 pb-8 text-sm text-zinc-500">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="#" class="text-2xl font-bold tracking-widest gold-gradient bg-clip-text text-transparent block mb-4">ELITE JEWELRY</a>
+                    <p class="max-w-md leading-relaxed mb-6">بعالم الإبداع والأناقة نختار لكم بعناية ما حصلنا عليه من سحر الطبيعة. نصنع مجوهرات تحاكي أنوثتك وتبرز جمالك الأصيل.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#B38728] hover:text-black transition-colors"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#B38728] hover:text-black transition-colors"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center hover:bg-[#B38728] hover:text-black transition-colors"><svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.597 1.323-1.325V1.325C24 .597 23.403 0 22.675 0z"></path></svg></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">روابط مهمة</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-[#B38728] transition-colors">من نحن</a></li>
+                        <li><a href="#" class="hover:text-[#B38728] transition-colors">سياسة الإستبدال والإسترجاع</a></li>
+                        <li><a href="#" class="hover:text-[#B38728] transition-colors">سياسة الخصوصية</a></li>
+                        <li><a href="#" class="hover:text-[#B38728] transition-colors">الشحن والتوصيل</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">طرق الدفع</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <div class="bg-white rounded px-2 py-1"><span class="text-blue-800 font-bold italic text-xs">VISA</span></div>
+                        <div class="bg-white rounded px-2 py-1"><span class="text-red-600 font-bold italic text-xs">MasterCard</span></div>
+                        <div class="bg-white rounded px-2 py-1"><span class="text-green-600 font-bold italic text-xs">Apple Pay</span></div>
+                        <div class="bg-white rounded px-2 py-1"><span class="text-purple-600 font-bold italic text-xs">STC Pay</span></div>
+                    </div>
+                    <p class="mt-4 text-xs">الرقم الضريبي: 310967048700003</p>
+                </div>
+            </div>
+
+            <div class="border-t border-zinc-900 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; 2026 مجوهرات النخبة. جميع الحقوق محفوظة.</p>
+                <p class="flex items-center gap-1.5">
+                    <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                    تشفير آمن بنسبة 100%
+                </p>
+            </div>
         </div>
     </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="#" onclick="openWhatsAppChat(event)" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:bg-[#20ba59] hover:scale-110 transition-all duration-300 flex items-center justify-center group" aria-label="تواصل معنا عبر واتساب">
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.498 1.45 5.435 1.451 5.58 0 10.121-4.54 10.124-10.122.002-2.705-1.05-5.248-2.96-7.16C17.325 1.412 14.783.36 12.008.36c-5.58 0-10.121 4.54-10.124 10.122-.001 1.954.512 3.864 1.487 5.578L2.39 20.621l4.257-1.467z"/>
+        </svg>
+        <span class="absolute right-full mr-4 bg-[#111] text-white text-xs whitespace-nowrap px-3 py-2 rounded border border-zinc-800 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">تواصل معنا</span>
+    </a>
 
     <!-- Client-Side Architecture & Logic -->
     <script>
@@ -178,6 +361,11 @@
 
         // Developer Configuration Note: Updated with the store's international number
         const WHATSAPP_PHONE_NUMBER = "213562163900";
+
+        function selectCategory(category) {
+            document.getElementById('category-filter').value = category;
+            filterAndRenderCatalog();
+        }
 
         /**
          * Secure Catalog Renderer using native safe DOM injection (No innerHTML for dynamic user string content)
@@ -353,8 +541,52 @@
             if (isolatedWindow) isolatedWindow.opener = null;
         }
 
+        // Hero Carousel Logic
+        const heroImages = [
+            "url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=80')",
+            "url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1200&q=80')",
+            "url('https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=1200&q=80')"
+        ];
+        let currentImageIndex = 0;
+
+        function updateCarousel() {
+            const hero = document.getElementById('hero-carousel');
+            const indicators = document.getElementById('carousel-indicators').children;
+
+            hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), ${heroImages[currentImageIndex]}`;
+
+            Array.from(indicators).forEach((ind, index) => {
+                if (index === currentImageIndex) {
+                    ind.classList.remove('bg-white/30', 'hover:bg-white/60');
+                    ind.classList.add('bg-[#B38728]');
+                } else {
+                    ind.classList.remove('bg-[#B38728]');
+                    ind.classList.add('bg-white/30', 'hover:bg-white/60');
+                }
+            });
+        }
+
+        setInterval(() => {
+            currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+            updateCarousel();
+        }, 5000); // Change image every 5 seconds
+
+
+        // Open General WhatsApp Chat
+        function openWhatsAppChat(event) {
+            event.preventDefault();
+            const textPayload = "مرحباً، أود الاستفسار عن مجوهرات النخبة.";
+            const encodedText = encodeURIComponent(textPayload);
+            const targetUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE_NUMBER}&text=${encodedText}`;
+
+            const isolatedWindow = window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            if (isolatedWindow) isolatedWindow.opener = null;
+        }
+
         // Initialize Catalog
-        document.addEventListener('DOMContentLoaded', filterAndRenderCatalog);
+        document.addEventListener('DOMContentLoaded', () => {
+            filterAndRenderCatalog();
+        });
     </script>
 </body>
 </html>

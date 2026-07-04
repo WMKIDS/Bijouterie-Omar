@@ -22,6 +22,9 @@
 </head>
 <body class="bg-[#0b0b0b] text-gray-100 min-h-screen flex flex-col justify-between selection:bg-[#B38728] selection:text-black relative">
 
+    <!-- Interactive Gold Dust Canvas -->
+    <canvas id="gold-dust" class="pointer-events-none fixed inset-0 z-[100] w-full h-full"></canvas>
+
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
@@ -177,7 +180,7 @@
         let cart = [];
 
         // Developer Configuration Note: Updated with the store's international number
-        const WHATSAPP_PHONE_NUMBER = "213562163900";
+        const WHATSAPP_NUM = "213562163900";
 
         /**
          * Secure Catalog Renderer using native safe DOM injection (No innerHTML for dynamic user string content)
@@ -346,7 +349,7 @@
             textPayload += `يرجى تزويدي بمعلومات الشحن وتوافر هذه القطع.`;
 
             const encodedText = encodeURIComponent(textPayload);
-            const targetUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE_NUMBER}&text=${encodedText}`;
+            const targetUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUM}&text=${encodedText}`;
 
             // Prevention of Reverse Tabnabbing (Security Target)
             const isolatedWindow = window.open(targetUrl, '_blank', 'noopener,noreferrer');
@@ -355,6 +358,111 @@
 
         // Initialize Catalog
         document.addEventListener('DOMContentLoaded', filterAndRenderCatalog);
+    </script>
+
+    <!-- Gold Dust Particle Engine -->
+    <script>
+        const canvas = document.getElementById('gold-dust');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+        const numParticles = window.innerWidth < 768 ? 50 : 150;
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        const mouse = { x: null, y: null };
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+        window.addEventListener('touchend', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.color = `rgba(191, 149, 63, ${this.opacity})`; // #BF953F
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Mouse interaction
+                if (mouse.x != null && mouse.y != null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const maxDistance = 120;
+
+                    if (distance < maxDistance) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (maxDistance - distance) / maxDistance;
+                        const directionX = forceDirectionX * force * 3;
+                        const directionY = forceDirectionY * force * 3;
+
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
     </script>
 </body>
 </html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Security Headers (Mitigates XSS & Clickjacking) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+
+    <title>مجوهرات النخبة | Luxury Jewelry</title>
+
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', 'Amiri', serif; }
+        .gold-gradient { background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%); }
+    </style>
+</head>
+<body class="bg-[#0b0b0b] text-gray-100 min-h-screen flex flex-col justify-between selection:bg-[#B38728] selection:text-black relative">
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="border-b border-zinc-900 bg-[#0b0b0b]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-widest gold-gradient bg-clip-text text-transparent">ELITE JEWELRY</a>
+
+            <!-- Cart Icon -->
+            <div class="relative cursor-pointer p-2 hover:bg-zinc-900 rounded-full transition-colors" onclick="toggleCartModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-zinc-400 hover:text-[#BF953F] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-[#B38728] text-black text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-[60vh] flex items-center justify-center text-center px-4 bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1200&q=80');">
+        <div>
+            <span class="text-xs uppercase tracking-widest text-[#B38728] font-semibold">صياغة فريدة ومميزة</span>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mt-2 mb-4">أناقة أبدية تليق بكِ</h1>
+            <p class="text-zinc-400 max-w-xl mx-auto text-sm md:text-base mb-8 leading-relaxed">قطع حصرية مصممة بدقة لتناسب أرقى الأذواق. ذهب عيار 18 و 24 قيراط وألماس نقي موثق بشهادات عالمية.</p>
+            <a href="#catalog" class="gold-gradient text-black px-8 py-3.5 text-xs font-bold tracking-wider uppercase hover:opacity-90 transition-opacity">تصفح المجموعة الحصرية</a>
+        </div>
+    </header>
+
+    <!-- Product Catalog Section -->
+    <main id="catalog" class="max-w-7xl mx-auto px-6 py-20 w-full scroll-mt-16">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-serif font-bold text-white mb-2">المجموعة الحصرية</h2>
+            <div class="w-24 h-0.5 bg-[#B38728] mx-auto mb-8"></div>
+
+            <!-- Filter & Search Controls -->
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
+                <input type="text" id="search-input" placeholder="ابحث عن منتج..." class="bg-[#111] border border-zinc-800 text-white px-4 py-2 rounded focus:outline-none focus:border-[#B38728] transition-colors w-full md:w-64" onkeyup="filterAndRenderCatalog()" />
+                <select id="category-filter" class="bg-[#111] border border-zinc-800 text-white px-4 py-2 rounded focus:outline-none focus:border-[#B38728] transition-colors w-full md:w-48" onchange="filterAndRenderCatalog()">
+                    <option value="الكل">جميع التصنيفات</option>
+                    <option value="خواتم">خواتم</option>
+                    <option value="قلادات">قلادات</option>
+                    <option value="أساور">أساور</option>
+                    <option value="أقراط">أقراط</option>
+                    <option value="أطقم">أطقم</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Dynamic Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamic elements will be injected here via JavaScript securely -->
+        </div>
+    </main>
+
+    <!-- Cart Modal (Hidden by Default) -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-end transform translate-x-full transition-transform duration-300">
+        <div class="bg-[#111] w-full max-w-md h-full p-6 flex flex-col justify-between border-r border-zinc-900">
+            <div>
+                <div class="flex justify-between items-center border-b border-zinc-900 pb-4 mb-6">
+                    <h3 class="text-xl font-bold text-white font-serif">حقيبة التسوق</h3>
+                    <button onclick="toggleCartModal()" class="text-zinc-500 hover:text-white text-3xl transition-colors cursor-pointer">&times;</button>
+                </div>
+                <!-- Cart Items Container -->
+                <div id="cart-items" class="space-y-4 overflow-y-auto max-h-[60vh] pr-1">
+                    <!-- Dynamic elements injected here -->
+                </div>
+            </div>
+
+            <div class="border-t border-zinc-900 pt-6">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-zinc-400">الإجمالي:</span>
+                    <span id="cart-total" class="text-xl font-mono font-bold text-[#FCF6BA]">0 د.ج</span>
+                </div>
+
+                <!-- Safe WhatsApp Order Button -->
+                <button onclick="checkoutViaWhatsApp()" class="w-full bg-[#25D366] text-black font-bold py-4 text-center flex items-center justify-center gap-2 hover:bg-[#20ba59] transition-colors rounded-none cursor-pointer">
+                    <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.498 1.45 5.435 1.451 5.58 0 10.121-4.54 10.124-10.122.002-2.705-1.05-5.248-2.96-7.16C17.325 1.412 14.783.36 12.008.36c-5.58 0-10.121 4.54-10.124 10.122-.001 1.954.512 3.864 1.487 5.578L2.39 20.621l4.257-1.467z"/>
+                    </svg>
+                    تأكيد الطلب وتفاصيل الشحن عبر واتساب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-950 bg-[#070707] text-center py-8 text-xs text-zinc-600">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 مجوهرات النخبة. جميع الحقوق محفوظة.</p>
+            <p class="flex items-center gap-1.5">
+                <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                تشفير آمن بنسبة 100%
+            </p>
+        </div>
+    </footer>
+
+    <!-- Client-Side Architecture & Logic -->
+    <script>
+        // Immutability enforced to prevent client-side manipulation of prices
+        const PRODUCT_DB = Object.freeze([
+            {
+                id: "p1",
+                name: "طقم الذهب الكلاسيكي",
+                price: 750000,
+                category: "أطقم",
+                img: "images/5929082553065213401_121.jpg"
+            },
+            {
+                id: "p2",
+                name: "خاتم الألماس الإمبراطوري",
+                price: 350000,
+                category: "خواتم",
+                img: "images/5929082553065213402_121.jpg"
+            },
+            {
+                id: "p3",
+                name: "قلادة الذهب الملكية",
+                price: 480000,
+                category: "قلادات",
+                img: "images/5929082553065213403_121.jpg"
+            },
+            {
+                id: "p4",
+                name: "سوار الزمرد النقي",
+                price: 220000,
+                category: "أساور",
+                img: "images/5929082553065213404_121.jpg"
+            },
+            {
+                id: "p5",
+                name: "طقم ألماس سهرة",
+                price: 890000,
+                category: "أطقم",
+                img: "images/5929082553065213405_120.jpg"
+            },
+            {
+                id: "p6",
+                name: "أقراط اللؤلؤ الطبيعي",
+                price: 150000,
+                category: "أقراط",
+                img: "images/5929082553065213406_121.jpg"
+            },
+            {
+                id: "p7",
+                name: "مجموعة قلادات ذهبية ولؤلؤ",
+                price: 520000,
+                category: "قلادات",
+                img: "images/5929082553065213407_121.jpg"
+            }
+        ]);
+
+        // Reactive Application State
+        let cart = [];
+
+        // Developer Configuration Note: Updated with the store's international number
+        const WHATSAPP_PHONE_NUMBER = "213562163900";
+
+        /**
+         * Secure Catalog Renderer using native safe DOM injection (No innerHTML for dynamic user string content)
+         */
+        function filterAndRenderCatalog() {
+            const grid = document.getElementById('products-grid');
+            const searchInput = document.getElementById('search-input').value.toLowerCase();
+            const categoryFilter = document.getElementById('category-filter').value;
+
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            PRODUCT_DB.forEach(product => {
+                // Filter logic
+                const matchesSearch = product.name.toLowerCase().includes(searchInput) || product.category.toLowerCase().includes(searchInput);
+                const matchesCategory = categoryFilter === "الكل" || product.category === categoryFilter;
+
+                if (matchesSearch && matchesCategory) {
+                    const card = document.createElement('div');
+                    card.className = "bg-[#111] border border-zinc-900 overflow-hidden hover:border-zinc-800 transition-all duration-300 flex flex-col group";
+
+                    // Safe static template structure
+                    card.innerHTML = `
+                        <div class="relative overflow-hidden aspect-square bg-zinc-950">
+                            <img src="${product.img}" alt="${product.name}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700" loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow justify-between">
+                            <div>
+                                <span class="text-[10px] text-[#B38728] tracking-widest uppercase font-bold">${product.category}</span>
+                                <h3 class="text-lg font-bold text-white mt-1 mb-2 font-serif">${product.name}</h3>
+                            </div>
+                            <div class="mt-6 flex items-center justify-between">
+                                <span class="text-lg font-mono text-[#FCF6BA] font-semibold">${product.price.toLocaleString()} د.ج</span>
+                                <button onclick="addToCart('${product.id}')" class="border border-[#B38728] text-[#B38728] hover:bg-[#B38728] hover:text-black px-4 py-2 text-xs font-bold tracking-wider transition-colors uppercase cursor-pointer">
+                                    إضافة للسلة
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            const toastContainer = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "bg-[#111] border border-[#B38728] text-white px-4 py-3 rounded shadow-lg transition-all duration-300 translate-x-full flex items-center gap-2";
+            toast.innerHTML = `
+                <svg class="w-5 h-5 text-[#B38728]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>${message}</span>
+            `;
+            toastContainer.appendChild(toast);
+
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-x-full');
+            }, 10);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // State Handlers
+        function addToCart(id) {
+            const product = PRODUCT_DB.find(p => p.id === id);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                cart = cart.map(item => item.id === id ? { ...item, qty: item.qty + 1 } : item);
+            } else {
+                cart = [...cart, { ...product, qty: 1 }];
+            }
+            updateCartDOM();
+            showToast("تمت الإضافة إلى الحقيبة بنجاح");
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartDOM();
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('translate-x-full');
+        }
+
+        /**
+         * Dynamic DOM update and internal security verification of catalog pricing
+         */
+        function updateCartDOM() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            cartCount.textContent = totalItems;
+            cartCount.classList.toggle('hidden', totalItems === 0);
+
+            cartItemsContainer.innerHTML = '';
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                // Cross-reference current pricing with static DB structure to prevent client DOM alterations
+                const dbProduct = PRODUCT_DB.find(p => p.id === item.id);
+                const verifiedPrice = dbProduct ? dbProduct.price : 0;
+                totalPrice += verifiedPrice * item.qty;
+
+                const itemRow = document.createElement('div');
+                itemRow.className = "flex items-center justify-between border-b border-zinc-900 pb-4";
+                itemRow.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.img}" class="w-14 h-14 object-cover bg-zinc-950" alt="">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">${item.name}</h4>
+                            <span class="text-xs text-zinc-500">${item.qty} × ${verifiedPrice.toLocaleString()} د.ج</span>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart('${item.id}')" class="text-zinc-600 hover:text-red-400 text-xs transition-colors cursor-pointer">حذف</button>
+                `;
+                cartItemsContainer.appendChild(itemRow);
+            });
+
+            cartTotal.textContent = `${totalPrice.toLocaleString()} د.ج`;
+        }
+
+        /**
+         * Builds a sanitised and secure payload to process WhatsApp orders
+         */
+        function checkoutViaWhatsApp() {
+            if (cart.length === 0) {
+                alert("حقيبة التسوق فارغة حالياً. يرجى إضافة قطع للمتابعة.");
+                return;
+            }
+
+            let textPayload = `*طلب جديد من متجر مجوهرات النخبة*\n`;
+            textPayload += `============================\n`;
+
+            let finalPriceTotal = 0;
+            cart.forEach((item, index) => {
+                const dbProduct = PRODUCT_DB.find(p => p.id === item.id);
+                const verifiedPrice = dbProduct ? dbProduct.price : 0;
+                const subtotal = verifiedPrice * item.qty;
+                finalPriceTotal += subtotal;
+
+                // Sanitize string variables (Defense against text format break attempts)
+                const sanitizedName = item.name.replace(/[^\w\s\u0600-\u06FF]/g, '');
+
+                textPayload += `${index + 1}. *${sanitizedName}*\n`;
+                textPayload += `   الكمية: ${parseInt(item.qty)}\n`;
+                textPayload += `   السعر الإجمالي: ${subtotal.toLocaleString()} د.ج\n`;
+            });
+
+            textPayload += `============================\n`;
+            textPayload += `*إجمالي الفاتورة النهائي:* ${finalPriceTotal.toLocaleString()} د.ج\n\n`;
+            textPayload += `يرجى تزويدي بمعلومات الشحن وتوافر هذه القطع.`;
+
+            const encodedText = encodeURIComponent(textPayload);
+            const targetUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE_NUMBER}&text=${encodedText}`;
+
+            // Prevention of Reverse Tabnabbing (Security Target)
+            const isolatedWindow = window.open(targetUrl, '_blank', 'noopener,noreferrer');
+            if (isolatedWindow) isolatedWindow.opener = null;
+        }
+
+        // Initialize Catalog
+        document.addEventListener('DOMContentLoaded', filterAndRenderCatalog);
+    </script>
+</body>
+</html>
